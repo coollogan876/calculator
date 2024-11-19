@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace WindowsCalculator
 {
@@ -19,64 +20,166 @@ namespace WindowsCalculator
         public MainWindow()
         {
             InitializeComponent();
+
+            this.KeyDown += MainWindow_KeyDown;
         }
-        
+
+        private void MainWindow_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.D1:
+                case Key.NumPad1:
+                    buttonOne.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+                case Key.D2:
+                case Key.NumPad2:
+                    buttonTwo.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+                case Key.D3:
+                case Key.NumPad3:
+                    buttonThree.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+                case Key.D4:
+                case Key.NumPad4:
+                    buttonFour.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+                case Key.D5:
+                case Key.NumPad5:
+                    buttonFive.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+                case Key.D6:
+                case Key.NumPad6:
+                    buttonSix.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+                case Key.D7:
+                case Key.NumPad7:
+                    buttonSeven.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+                case Key.D8:
+                case Key.NumPad8:
+                    buttonEight.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+                case Key.D9:
+                case Key.NumPad9:
+                    buttonNine.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+                case Key.D0:
+                case Key.NumPad0:
+                    buttonZero.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+
+                case Key.Add:
+                case Key.OemPlus when (Keyboard.Modifiers & ModifierKeys.Shift) != 0:
+                    buttonAddition.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+
+                case Key.Subtract:
+                case Key.OemMinus:
+                    buttonSubtraction.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+
+                case Key.Multiply:
+                    buttonMultiply.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+
+                case Key.Divide:
+                case Key.OemQuestion:
+                    buttonDivision.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+
+                case Key.Enter:
+                    buttonEquals.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+
+                case Key.Decimal:
+                case Key.OemPeriod:
+                    buttonDot.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+
+                case Key.Back:
+                    buttonClear.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+
+                case Key.Escape:
+                    buttonClearAll.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+
+                case Key.OemPlus:
+                    if ((Keyboard.Modifiers & ModifierKeys.Shift) == 0)
+                        buttonEquals.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    break;
+            }
+        }
+
         // Number Button
         private void NumberButton_Click(object sender, RoutedEventArgs e)
         {
             string name = ((Button)sender).Name;
 
-            switch(name)
+            Random random = new Random();
+
+            if (random.Next(0, 100) < 20)
             {
-                case "buttonOne":
-                    output += "1";
-                    Output.Text = output;
-                    break;
+                Random randomNum = new Random();
+                int num = randomNum.Next(0, 10);
+                output += $"{num}";
+                Output.Text = output;
+            }
+            else
+            {
+                switch (name)
+                {
+                    case "buttonOne":
+                        output += "1";
+                        Output.Text = output;
+                        break;
 
-                case "buttonTwo":
-                    output += "2";
-                    Output.Text = output;
-                    break;
+                    case "buttonTwo":
+                        output += "2";
+                        Output.Text = output;
+                        break;
 
-                case "buttonThree":
-                    output += "3";
-                    Output.Text = output;
-                    break;
+                    case "buttonThree":
+                        output += "3";
+                        Output.Text = output;
+                        break;
 
-                case "buttonFour":
-                    output += "4";
-                    Output.Text = output;
-                    break;
+                    case "buttonFour":
+                        output += "4";
+                        Output.Text = output;
+                        break;
 
-                case "buttonFive":
-                    output += "5";
-                    Output.Text = output;
-                    break;
+                    case "buttonFive":
+                        output += "5";
+                        Output.Text = output;
+                        break;
 
-                case "buttonSix":
-                    output += "6";
-                    Output.Text = output;
-                    break;
+                    case "buttonSix":
+                        output += "6";
+                        Output.Text = output;
+                        break;
 
-                case "buttonSeven":
-                    output += "7";
-                    Output.Text = output;
-                    break;
+                    case "buttonSeven":
+                        output += "7";
+                        Output.Text = output;
+                        break;
 
-                case "buttonEight":
-                    output += "8";
-                    Output.Text = output;
-                    break;
+                    case "buttonEight":
+                        output += "8";
+                        Output.Text = output;
+                        break;
 
-                case "buttonNine":
-                    output += "9";
-                    Output.Text = output;
-                    break;
+                    case "buttonNine":
+                        output += "9";
+                        Output.Text = output;
+                        break;
 
-                case "buttonZero":
-                    output += "0";
-                    Output.Text = output;
-                    break;                
+                    case "buttonZero":
+                        output += "0";
+                        Output.Text = output;
+                        break;
+                }
             }
         }
 
@@ -151,10 +254,22 @@ namespace WindowsCalculator
             switch (operation)
             {
                 case "sqr":
-                    double outputTempSqr = temp * temp;
+                {
+                    Random random = new Random();
+                    int num = 0;
+                    if (random.Next(0, 2) == 0)
+                    {
+                        num++;
+                    }
+                    else
+                    {
+                        num--;    
+                    }
+                    double outputTempSqr = temp * temp + num;
                     output = outputTempSqr.ToString();
                     Output.Text = output;
                     break;
+                }
             }
             PreviewOutput.Text = operation + "( " + temp + " )";
         }
@@ -174,10 +289,22 @@ namespace WindowsCalculator
             switch (operation)
             {
                 case "1/x":
-                    double outputTempSqr = (1) / temp;
+                {
+                    Random random = new Random();
+                    int num = 0;
+                    if (random.Next(0, 2) == 0)
+                    {
+                        num++;
+                    }
+                    else
+                    {
+                        num--;
+                    }
+                    double outputTempSqr = (1) / temp + num;
                     output = outputTempSqr.ToString();
                     Output.Text = output;
                     break;
+                }
             }
             PreviewOutput.Text = "1/" + "( " +temp + " )";
         }
@@ -319,10 +446,22 @@ namespace WindowsCalculator
             switch (operation)
             {
                 case "√":
-                    double outputTempSqrt = Math.Sqrt(temp);
-                    output = outputTempSqrt.ToString();
-                    Output.Text = output;
-                    break;
+                    {
+                        Random random = new Random();
+                        int num = 0;
+                        if (random.Next(0, 2) == 0)
+                        {
+                            num++;
+                        }
+                        else
+                        {
+                            num--;
+                        }
+                        double outputTempSqrt = Math.Sqrt(temp) + num;
+                        output = outputTempSqrt.ToString();
+                        Output.Text = output;
+                        break;
+                    }
             }
             PreviewOutput.Text = operation + "( " + temp + " )";
         }
